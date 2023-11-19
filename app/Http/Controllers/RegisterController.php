@@ -73,7 +73,7 @@ class RegisterController extends Controller
         if ($user) {
             return redirect()->route('register.index')->with(['success' => 'Data Berhasil Ditambahkan']);
         } else {
-            return redirect()->route('register.index')->with(['erorr' => 'Data Gagal Berhasil Ditambahkan']);
+            return redirect()->route('register.index')->with(['erorr' => 'Data Gagal Ditambahkan']);
         }
     }
 
@@ -109,7 +109,25 @@ class RegisterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $users = User::find($id);
+        if ($request->new_password != null) {
+            $this->validate($request, [
+                'new_password' => 'required|min:8|max:35',
+                'password_confirmation' => 'required|same:new_password|different:old_password'
+            ]);
+            if (!Hash::check($request->old_password, $users->password)) {
+                return redirect()->route('register.index')->with(['error' => 'Password lama tidak sesuai']);
+            }
+            $users->password = Hash::make($request->new_password);
+        }
+        $users->name = $request->name;
+        $users->email = $request->email;
+        $users->save();
+        if ($users) {
+            return redirect()->route('register.index')->with(['success' => 'Data Berhasil Diubah']);
+        } else {
+            return redirect()->route('register.index')->with(['erorr' => 'Data Gagal Diubah']);
+        }
     }
 
     /**

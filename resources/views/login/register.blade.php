@@ -88,7 +88,7 @@
                         @elseif($u->role == 2)
                         <td>
                             <a type="button" class="btn btn-warning btn-sm" href="#" data-toggle="modal"
-                                data-target="#largeModal"><i class="fa fa-edit"></i>
+                                data-target="#largeModal{{$u->id}}"><i class="fa fa-edit"></i>
                             </a>
                         </td>
                         <td>
@@ -97,7 +97,7 @@
                         @else
                         <td>
                             <a type="button" class="btn btn-warning btn-sm" href="#" data-toggle="modal"
-                                data-target="#largeModal"><i class="fa fa-edit"></i>
+                                data-target="#largeModal{{$u->id}}"><i class="fa fa-edit"></i>
                             </a>
                         </td>
                         <td>
