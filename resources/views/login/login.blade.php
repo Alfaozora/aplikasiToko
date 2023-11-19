@@ -43,12 +43,17 @@
                     </a>
                 </div>
                 <div class="login-form">
+                    @if ($message = Session::get('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{$message}}
+                    </div>
+                    @endif
                     <form action="/postlogin" method="POST" novalidate>
                         @csrf
                         <div class="form-group">
                             <label>Username</label>
                             <input type="Username" class="form-control" placeholder="Masukan Username" id="name"
-                                type="text" name="name" autofocus>
+                                type="text" name="name" value="{{old('name')}}" autofocus>
                             <div class="invalid-feedback">
                                 Username tidak valid
                             </div>
@@ -63,7 +68,7 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> Remember Me
+                                <input type="checkbox" id="remember" name="remember"> Remember Me
                             </label>
                             <label class="pull-right">
                                 <a href="#">Lupa Password?</a>
