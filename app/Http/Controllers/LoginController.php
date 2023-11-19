@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Session;
 
 class LoginController extends Controller
 {
@@ -15,8 +16,9 @@ class LoginController extends Controller
 
     public function postlogin(Request $request)
     {
-        $remember = $request->has('remember') ? true : false;
-        if (Auth()->attempt(['name' => $request->name, 'password' => $request->password], $remember)) {
+        Session::flash('name', $request->name);
+        Session::flash('email', $request->email);
+        if (Auth()->attempt(['name' => $request->name, 'password' => $request->password], $request->remember)) {
             $user = Auth::user();
         } else {
             return back()->with(['error' => 'Username atau Password Salah']);

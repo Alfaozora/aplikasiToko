@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Alert;
 use Auth;
 use Closure;
 use Illuminate\Http\Request;
@@ -19,8 +18,9 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role != 1) {
-            return back()->with(['error' => 'Anda harus login sebagai admin']);
+        $user = user::where('role', $request->role)->first();
+        if (Auth::user()->role == 1 && Auth::user()->role == 2) {
+            return redirect()->route('home');
         }
         return $next($request);
     }

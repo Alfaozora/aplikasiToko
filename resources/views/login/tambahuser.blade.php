@@ -56,8 +56,17 @@
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="hf-password" class=" form-control-label">Password</label>
                         </div>
-                        <div class="col-12 col-md-9"><input type="password" id="hf-password" name="password"
-                                placeholder="Masukan Password" class="form-control">
+                        <div class="col-12 col-md-9">
+                            <div class="input-group">
+                                <input type="password" id="hf-password" name="password" placeholder="Masukan Password"
+                                    class="form-control">
+                                <div class="input-group-append">
+                                    <button type="button" id="show-password-btn" class="btn btn-secondary"><i
+                                            class="fa fa-eye"></i></button>
+                                    <button type="button" id="hide-password-btn" class="btn btn-secondary d-none"><i
+                                            class="fa fa-eye-slash"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -94,4 +103,28 @@
         </div>
     </form>
 </div>
+<style>
+.d-none {
+    display: none !important;
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var passwordInput = document.getElementById("hf-password");
+    var showPasswordBtn = document.getElementById("show-password-btn");
+    var hidePasswordBtn = document.getElementById("hide-password-btn");
+
+    showPasswordBtn.addEventListener("click", function() {
+        passwordInput.type = "text";
+        showPasswordBtn.classList.add("d-none");
+        hidePasswordBtn.classList.remove("d-none");
+    });
+
+    hidePasswordBtn.addEventListener("click", function() {
+        passwordInput.type = "password";
+        hidePasswordBtn.classList.add("d-none");
+        showPasswordBtn.classList.remove("d-none");
+    });
+});
+</script>
 @endsection

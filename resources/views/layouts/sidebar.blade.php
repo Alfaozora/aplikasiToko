@@ -82,6 +82,8 @@
                         <li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vector Maps</a></li>
                     </ul>
                 </li>
+                @if (Auth::user()->role == 3)
+                @else
                 <h3 class="menu-title">Menu Admin</h3><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -92,6 +94,7 @@
                         </li>
                     </ul>
                 </li>
+                @endif
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
