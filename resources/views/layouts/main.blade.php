@@ -27,8 +27,10 @@
 
 <body>
     @include('layouts.sidebar')
-    @include('layouts.navbar')
-    @yield('container')
+    <div id="right-panel" class="right-panel">
+        @include('layouts.navbar')
+        @yield('konten')
+    </div>
     <script src="{{asset ('vendors/jquery/dist/jquery.min.js')}}"></script>
     <script src="{{asset ('vendors/popper.js/dist/umd/popper.min.js')}}"></script>
     <script src="{{asset ('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>

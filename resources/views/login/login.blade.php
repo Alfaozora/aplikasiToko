@@ -43,14 +43,23 @@
                     </a>
                 </div>
                 <div class="login-form">
-                    <form>
+                    <form action="/postlogin" method="POST" novalidate>
+                        @csrf
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" placeholder="Email">
+                            <label>Username</label>
+                            <input type="Username" class="form-control" placeholder="Masukan Username" id="name"
+                                type="text" name="name" autofocus>
+                            <div class="invalid-feedback">
+                                Username tidak valid
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password">
+                            <input type="password" class="form-control" placeholder="Password" name="password"
+                                autofocus>
+                            <div class="invalid-feedback">
+                                Password tidak valid
+                            </div>
                         </div>
                         <div class="checkbox">
                             <label>
