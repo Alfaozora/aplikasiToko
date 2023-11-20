@@ -44,6 +44,8 @@
     <script src="{{asset ('vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')}}"></script>
     <script src="{{asset ('vendors/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
     <script src="{{asset ('assets/js/script.js')}}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script>
     (function($) {
         "use strict";
