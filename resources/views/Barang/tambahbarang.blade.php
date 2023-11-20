@@ -39,7 +39,7 @@
                 <strong>Form</strong> Barang Baru
             </div>
             <div class="card-body card-block">
-                <form action="" method="post" class="form-horizontal">
+                <form action="{{route('barang.store')}}" method="post" class="form-horizontal">
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="hf-nama" class=" form-control-label">Kode Barang</label>
                         </div>

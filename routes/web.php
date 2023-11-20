@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,6 @@ Route::resource('register', RegisterController::class)->middleware(['auth', 'adm
 
 #Barang
 Route::resource('barang', BarangController::class)->middleware(['auth']);
+
+#Supplier
+Route::resource('supplier', SupplierController::class)->middleware(['auth']);
