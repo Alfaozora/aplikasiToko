@@ -43,9 +43,27 @@
             <strong class="card-title">Data Barang</strong>
         </div>
         <div class="card-body">
-            <a type="button" class="btn btn-primary" href="{{route('barang.create')}}"><i class="fa fa-plus"></i>&nbsp;
-                Tambah Barang</a>
-            <table class="table table-bordered" style="margin-top: 6px;">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="card-body text-secondary" style="padding-left: 0px;">
+                        <a type="button" class="btn btn-primary" href="{{route('barang.create')}}"><i
+                                class="fa fa-plus"></i>&nbsp;
+                            Tambah Barang</a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <form action="" method="GET">
+                        <div class="card-body input-group form-group" style="padding-left: 0px;">
+                            <button type="submit" class="btn btn-primary" type="button">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                            <input type="text" id="input1-group2" name="cari" placeholder="Kode, Nama, dan Jenis Barang"
+                                class="form-control">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <table class="table table-bordered">
                 <thead class="text-center">
                     <tr>
                         <th rowspan="2" style="vertical-align: middle;">No</th>
@@ -71,11 +89,11 @@
                         <td style="vertical-align: middle;">{{ $b->jenis_barang }}</td>
                         <td style="vertical-align: middle;">{{ $b->harga }}</td>
                         <td style="vertical-align: middle;">{{ $b->stok }}</td>
-                        <td class="text-center">
+                        <td class="text-center" style="vertical-align: middle;">
                             <a type="button" class="btn btn-warning btn-sm" data-toggle="modal" href="#"
                                 data-target="#largeModal{{$b->id}}"><i class="fa fa-edit"></i></a>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center" style="vertical-align: middle;">
                             <form action="{{route('barang.destroy', $b->id)}}" method="POST" class="d-inline">
                                 @csrf
                                 @method('delete')
@@ -88,6 +106,7 @@
                 </tbody>
             </table>
         </div>
+        {{ $barangs->links() }}
     </div>
 </div>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

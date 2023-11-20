@@ -13,9 +13,13 @@ class BarangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $barangs = Barang::all();
+        $cari = $request->cari;
+        $barangs = Barang::where('kode', 'LIKE', "%" . $cari . "%")
+            ->orWhere('nama_barang', 'LIKE', "%" . $cari . "%")
+            ->orWhere('jenis_barang', 'LIKE', "%" . $cari . "%")
+            ->orderBy('id', 'asc')->paginate(20);
         return view('barang.databarang', compact('barangs'));
     }
 
