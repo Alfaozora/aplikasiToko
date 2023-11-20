@@ -5,7 +5,7 @@
     <div class="col-sm-4">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Register</h1>
+                <h1>Barang</h1>
             </div>
         </div>
     </div>
@@ -13,13 +13,12 @@
         <div class="page-header float-right">
             <div class="page-title">
                 <ol class="breadcrumb text-right">
-                    <li class="active">Register</li>
+                    <li class="active">Data Barang</li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
-
 <div class="col-lg-12" style="margin-top: 15px;">
     @if ($message = Session::get('success'))
     <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
@@ -41,18 +40,20 @@
     @endif
     <div class="card">
         <div class="card-header">
-            <strong class="card-title">Data Pengguna Aplikasi</strong>
+            <strong class="card-title">Data Barang</strong>
         </div>
         <div class="card-body">
-            <a type="button" class="btn btn-primary" href="{{route('register.create')}}"><i
-                    class="fa fa-plus"></i>&nbsp; Tambah User</a>
+            <a type="button" class="btn btn-primary" href="{{route('barang.create')}}"><i class="fa fa-plus"></i>&nbsp;
+                Tambah Barang</a>
             <table class="table table-bordered" style="margin-top: 6px;">
-                <thead class="text-center" style="vertical-align: middle;">
+                <thead class="text-center">
                     <tr>
                         <th rowspan="2" style="vertical-align: middle;">No</th>
-                        <th rowspan="2" style="vertical-align: middle;">Nama</th>
-                        <th rowspan="2" style="vertical-align: middle;">Email</th>
-                        <th rowspan="2" style="vertical-align: middle;">Status</th>
+                        <th rowspan="2" style="vertical-align: middle;">Kode</th>
+                        <th rowspan="2" style="vertical-align: middle;">Nama Barang</th>
+                        <th rowspan="2" style="vertical-align: middle;">Jenis Barang</th>
+                        <th rowspan="2" style="vertical-align: middle;">Harga</th>
+                        <th rowspan="2" style="vertical-align: middle;">Stok</th>
                         <th colspan="2">Aksi</th>
                     </tr>
                     <tr>
@@ -61,54 +62,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $u)
+                    @foreach ($barangs as $b)
                     <tr class="text-center">
-                        <input type="hidden" class="delete_id" value="{{$u->id}}">
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$u->name}}</td>
-                        <td>{{$u->email}}</td>
-                        <td>
-                            @if ($u->role == 1)
-                            Super Admin
-                            @elseif ($u->role == 2)
-                            Admin
-                            @elseif ($u->role == 3)
-                            Karyawan
-                            @endif
+                        <input type="hidden" class="delete_id" value="{{$b->id}}">
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{!! DNS1D::getBarcodeHTML("$b->kode",'EAN13', 2,33) !!}{{$b->kode}}</td>
+                        <td style="vertical-align: middle;">{{ $b->nama_barang }}</td>
+                        <td style="vertical-align: middle;">{{ $b->jenis_barang }}</td>
+                        <td style="vertical-align: middle;">{{ $b->harga }}</td>
+                        <td style="vertical-align: middle;">{{ $b->stok }}</td>
+                        <td class="text-center">
+                            <a type="button" class="btn btn-warning btn-sm" data-toggle="modal" href="#"
+                                data-target="#largeModal{{$b->id}}"><i class="fa fa-edit"></i></a>
                         </td>
-                        @if($u->role == 1)
-                        <td>
-                            <button type="button" class="btn btn-warning btn-sm" disabled="" href="#"
-                                data-toggle="modal" data-target="#largeModal"><i class="fa fa-edit"></i>
-                            </button>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" disabled=""><i class="fa fa-trash"></i></button>
-                        </td>
-                        @elseif($u->role == 2)
-                        <td>
-                            <a type="button" class="btn btn-warning btn-sm" href="#" data-toggle="modal"
-                                data-target="#largeModal{{$u->id}}"><i class="fa fa-edit"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" disabled=""><i class="fa fa-trash"></i></button>
-                        </td>
-                        @else
-                        <td>
-                            <a type="button" class="btn btn-warning btn-sm" href="#" data-toggle="modal"
-                                data-target="#largeModal{{$u->id}}"><i class="fa fa-edit"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <form action="{{route('register.destroy', $u->id)}}" method="POST" class="d-inline">
+                        <td class="text-center">
+                            <form action="{{route('barang.destroy', $b->id)}}" method="POST" class="d-inline">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-danger btn-sm btndelete"><i class="fa fa-trash"></i></button>
                             </form>
                         </td>
-                        @include('login.edit')
-                        @endif
+                        @include('barang.editbarang')
                     </tr>
                     @endforeach
                 </tbody>
@@ -148,7 +122,7 @@ $(document).ready(function() {
                     };
                     $.ajax({
                         type: "DELETE",
-                        url: 'register/' + deleteid,
+                        url: 'barang/' + deleteid,
                         data: data,
                         success: function(response) {
                             swal(response.status, {

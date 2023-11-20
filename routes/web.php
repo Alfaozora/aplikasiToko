@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\BarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,6 @@ Route::get('/home', [HomeController::class, 'index'])->middleware(['auth'])->nam
 
 #Register
 Route::resource('register', RegisterController::class)->middleware(['auth', 'admin']);
+
+#Barang
+Route::resource('barang', BarangController::class)->middleware(['auth']);
