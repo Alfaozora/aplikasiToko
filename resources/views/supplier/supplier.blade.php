@@ -5,7 +5,7 @@
     <div class="col-sm-4">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1>Register</h1>
+                <h1>Supplier</h1>
             </div>
         </div>
     </div>
@@ -13,7 +13,7 @@
         <div class="page-header float-right">
             <div class="page-title">
                 <ol class="breadcrumb text-right">
-                    <li class="active">Register</li>
+                    <li class="active">Data Supplier</li>
                 </ol>
             </div>
         </div>
@@ -40,74 +40,53 @@
     @endif
     <div class="card">
         <div class="card-header">
-            <strong class="card-title">Data Pengguna Aplikasi</strong>
+            <strong class="card-title">Data Supplier</strong>
         </div>
         <div class="card-body">
-            <a type="button" class="btn btn-primary" href="{{route('register.create')}}"><i
-                    class="fa fa-plus"></i>&nbsp; Tambah User</a>
+            <a type="button" class="btn btn-primary" href="{{route('supplier.create')}}"><i
+                    class="fa fa-plus"></i>&nbsp;
+                Tambah Supplier</a>
             <table class="table table-bordered" style="margin-top: 6px;">
-                <thead class="text-center" style="vertical-align: middle;">
+                <thead class="text-center">
                     <tr>
                         <th rowspan="2" style="vertical-align: middle;">No</th>
+                        <th rowspan="2" style="vertical-align: middle;">Supplier</th>
                         <th rowspan="2" style="vertical-align: middle;">Nama</th>
-                        <th rowspan="2" style="vertical-align: middle;">Email</th>
-                        <th rowspan="2" style="vertical-align: middle;">Status</th>
-                        <th colspan="2">Aksi</th>
+                        <th rowspan="2" style="vertical-align: middle;">Alamat</th>
+                        <th rowspan="2" style="vertical-align: middle;">No HP</th>
+                        <th colspan="3">Aksi</th>
                     </tr>
                     <tr>
+                        <th>Chat</th>
                         <th>Edit</th>
                         <th>Hapus</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $u)
+                    @foreach ($suppliers as $s)
                     <tr class="text-center">
-                        <input type="hidden" class="delete_id" value="{{$u->id}}">
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$u->name}}</td>
-                        <td>{{$u->email}}</td>
-                        <td>
-                            @if ($u->role == 1)
-                            Super Admin
-                            @elseif ($u->role == 2)
-                            Admin
-                            @elseif ($u->role == 3)
-                            Karyawan
-                            @endif
+                        <input type="hidden" class="delete_id" value="{{$s->id}}">
+                        <td>{{ $loop->iteration }}</td>
+                        <td style="vertical-align: middle;">{{ $s->supplier }}</td>
+                        <td style="vertical-align: middle;">{{ $s->nama }}</td>
+                        <td style="vertical-align: middle;">{{ $s->alamat }}</td>
+                        <td style="vertical-align: middle;">{{ $s->no_telp }}</td>
+                        <td class="text-center">
+                            <a type="button" class="btn btn-success btn-sm" href="#"><i
+                                    class="fa fa-phone-square"></i></a>
                         </td>
-                        @if($u->role == 1)
-                        <td>
-                            <button type="button" class="btn btn-warning btn-sm" disabled="" href="#"
-                                data-toggle="modal" data-target="#largeModal"><i class="fa fa-edit"></i>
-                            </button>
+                        <td class="text-center">
+                            <a type="button" class="btn btn-warning btn-sm" data-toggle="modal" href="#"
+                                data-target="#largeModal{{$s->id}}"><i class="fa fa-edit"></i></a>
                         </td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" disabled=""><i class="fa fa-trash"></i></button>
-                        </td>
-                        @elseif($u->role == 2)
-                        <td>
-                            <a type="button" class="btn btn-warning btn-sm" href="#" data-toggle="modal"
-                                data-target="#largeModal{{$u->id}}"><i class="fa fa-edit"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" disabled=""><i class="fa fa-trash"></i></button>
-                        </td>
-                        @else
-                        <td>
-                            <a type="button" class="btn btn-warning btn-sm" href="#" data-toggle="modal"
-                                data-target="#largeModal{{$u->id}}"><i class="fa fa-edit"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <form action="{{route('register.destroy', $u->id)}}" method="POST" class="d-inline">
+                        <td class="text-center">
+                            <form action="{{route('supplier.destroy', $s->id)}}" method="POST" class="d-inline">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-danger btn-sm btndelete"><i class="fa fa-trash"></i></button>
                             </form>
                         </td>
-                        @include('login.edit')
-                        @endif
+                        @include('supplier.editsupplier')
                     </tr>
                     @endforeach
                 </tbody>
@@ -147,7 +126,7 @@ $(document).ready(function() {
                     };
                     $.ajax({
                         type: "DELETE",
-                        url: 'register/' + deleteid,
+                        url: 'supplier/' + deleteid,
                         data: data,
                         success: function(response) {
                             swal(response.status, {

@@ -16,14 +16,13 @@
                     <a href="{{route('home')}}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
                 <h3 class="menu-title">Inventory</h3><!-- /.menu-title -->
-                <li class="menu-item-has-children dropdown">
+                <li class="menu-item-has-children dropdown {{ request()->is('barang*','supplier*') ? 'active' : '' }}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Data Master</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li class="{{ request()->is('barang*') ? 'active' : '' }}"><i class="fa fa-book"></i><a
-                                href="{{route('barang.index')}}">Data Barang</a></li>
-                        <li class="{{ request()->is('datasupplier*') ? 'active' : '' }}"><i class="fa fa-truck"></i><a
-                                href="#">Data Supplier</a></li>
+                        <li><i class="fa fa-book"></i><a href="{{route('barang.index')}}">Data Barang</a></li>
+                        <li><i class="fa fa-truck"></i><a href="{{route('supplier.index')}}">Data Supplier</a></li>
+                        <li><i class="fa fa-reply"></i><a href="#">Data Barang Masuk</a></li>
                     </ul>
                 </li>
 
