@@ -70,8 +70,11 @@
                         <th rowspan="2" style="vertical-align: middle;">Kode</th>
                         <th rowspan="2" style="vertical-align: middle;">Nama Barang</th>
                         <th rowspan="2" style="vertical-align: middle;">Jenis Barang</th>
-                        <th rowspan="2" style="vertical-align: middle;">Harga</th>
+                        <th rowspan="2" style="vertical-align: middle;">Harga Beli</th>
                         <th rowspan="2" style="vertical-align: middle;">Stok</th>
+                        <th rowspan="2" style="vertical-align: middle;">Satuan</th>
+                        <th rowspan="2" style="vertical-align: middle;">Harga Jual</th>
+                        <th rowspan="2" style="vertical-align: middle;">Profit</th>
                         <th colspan="2">Aksi</th>
                     </tr>
                     <tr>
@@ -83,12 +86,16 @@
                     @foreach ($barangs as $b)
                     <tr class="text-center">
                         <input type="hidden" class="delete_id" value="{{$b->id}}">
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{!! DNS1D::getBarcodeHTML("$b->kode",'EAN13', 2,33) !!}{{$b->kode}}</td>
+                        <td style="vertical-align: middle;">{{ $loop->iteration }}</td>
+                        <td style="vertical-align: middle;">{!! DNS1D::getBarcodeHTML("$b->kode",'EAN13', 2,33)
+                            !!}{{$b->kode}}</td>
                         <td style="vertical-align: middle;">{{ $b->nama_barang }}</td>
                         <td style="vertical-align: middle;">{{ $b->jenis_barang }}</td>
-                        <td style="vertical-align: middle;">{{ $b->harga }}</td>
+                        <td style="vertical-align: middle;">{{ number_format ($b->harga, 0, ',', '.') }}</td>
                         <td style="vertical-align: middle;">{{ $b->stok }}</td>
+                        <td style="vertical-align: middle;">{{ $b->satuan }}</td>
+                        <td style="vertical-align: middle;">{{ number_format($b->harga_jual, 0, ',', '.') }}</td>
+                        <td style="vertical-align: middle;">{{ number_format($b->profit, 0, ',', '.') }}</td>
                         <td class="text-center" style="vertical-align: middle;">
                             <a type="button" class="btn btn-warning btn-sm" data-toggle="modal" href="#"
                                 data-target="#largeModal{{$b->id}}"><i class="fa fa-edit"></i></a>
@@ -103,6 +110,16 @@
                         @include('barang.editbarang')
                     </tr>
                     @endforeach
+                    <tr>
+                        <th class="text-center">Total</th>
+                        <th colspan="3"></th>
+                        <th class="text-center">{{ number_format($totalHarga, 0, ',', '.')}}</th>
+                        <th class="text-center">{{$totalStok}}</th>
+                        <th style="background-color: lightgray;"></th>
+                        <th class="text-center">{{ number_format($totalHargaJual, 0, ',', '.')}}</th>
+                        <th class="text-center">{{ number_format($totalProfit, 0, ',', '.')}}</th>
+                        <th colspan="2" style="background-color: lightgray;"></th>
+                    </tr>
                 </tbody>
             </table>
         </div>

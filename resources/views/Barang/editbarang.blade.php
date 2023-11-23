@@ -1,13 +1,3 @@
-{{-- Menampilkan erorr validasi--}}
-@if (count($errors) > 0)
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
 <form method="post" action="{{route('barang.update', $b->id)}}" validate>
     @csrf
     @method('PUT')
@@ -60,6 +50,47 @@
                         <div class="col-12 col-md-9"><input type="text" id="hf-stok" name="stok"
                                 placeholder="Masukan Banyaknya Stok" class="form-control"
                                 value="{{old('stok', $b->stok)}}">
+                            @if($errors->has('stok'))
+                            <li>{{ $errors}}</li>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="select" class=" form-control-label">Satuan</label></div>
+                        <div class="col-12 col-md-9">
+                            <select name="satuan" id="satuan" class="form-control"
+                                value="{{old('satuan', $b->satuan)}}">
+                                <option value="">Silahkan Pilih</option>
+                                <option value="pcs">Pcs</option>
+                                <option value="box">Box</option>
+                                <option value="lusin">Lusin</option>
+                                <option value="kodi">Kodi</option>
+                                <option value="gross">Gross</option>
+                                <option value="rim">Rim</option>
+                                <option value="meter">Meter</option>
+                                <option value="batang">Batang</option>
+                                <option value="buah">Buah</option>
+                                <option value="lembar">Lembar</option>
+                                <option value="liter">Liter</option>
+                                <option value="botol">Botol</option>
+                                <option value="kotak">Kotak</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="hf-harga_jual" class="form-control-label">Harga
+                                Jual</label>
+                        </div>
+                        <div class="col-12 col-md-9"><input type="text" id="hf-harga_jual" name="harga_jual"
+                                placeholder="Masukan Harga Jual" class="form-control"
+                                value="{{old('harga_jual', $b->harga_jual)}}">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="hf-profit" class=" form-control-label">Profit</label>
+                        </div>
+                        <div class="col-12 col-md-9"><input type="text" id="hf-profit" name="profit"
+                                class="form-control" disabled="">
                         </div>
                     </div>
                 </div>

@@ -22,6 +22,7 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-book"></i><a href="{{route('barang.index')}}">Data Barang</a></li>
                         <li><i class="fa fa-truck"></i><a href="{{route('supplier.index')}}">Data Supplier</a></li>
+                        <li><i class="fa fa-reply"></i><a href="#">Data Barang Masuk</a></li>
                     </ul>
                 </li>
 
