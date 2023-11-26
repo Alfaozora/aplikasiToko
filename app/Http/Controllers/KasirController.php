@@ -7,8 +7,18 @@ use App\Models\Barang;
 
 class KasirController extends Controller
 {
-    public function kasir()
+    public function kasir(Request $request)
     {
-        return view('pos.kasir');
+        $search = $request->input('search');
+        if($search){
+            $barangs = barang::where('kode', 'like', "%$search%")
+            ->orWhere('nama_barang', 'like', "%$search%")
+            ->get();
+            return view('pos.kasir', compact('barangs'));
+        }else{
+            return view('pos.kasir', ['barangs' => []]);
+        }
+        
+        
     }
 }

@@ -39,3 +39,4 @@ Route::resource('supplier', SupplierController::class)->middleware(['auth']);
 
 #Kasir
 Route::get('/kasir', [KasirController::class, 'kasir'])->middleware(['auth'])->name('kasir');
+Route::get('/kasir/search', [KasirController::class, 'search'])->middleware(['auth'])->name('kasir.search');
