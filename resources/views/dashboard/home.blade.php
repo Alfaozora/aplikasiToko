@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <h4 class="mb-0">
-                    <span class="count">10468</span>
+                    <span class="count">{{$barang}}</span>
                 </h4>
                 <p class="text-light">Stok Barang</p>
 

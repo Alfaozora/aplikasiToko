@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\KasirController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,7 @@ Route::resource('barang', BarangController::class)->middleware(['auth']);
 
 #Supplier
 Route::resource('supplier', SupplierController::class)->middleware(['auth']);
+
+#Kasir
+Route::get('/kasir', [KasirController::class, 'kasir'])->middleware(['auth'])->name('kasir');
+Route::get('/kasir/search', [KasirController::class, 'search'])->middleware(['auth'])->name('kasir.search');
