@@ -28,7 +28,7 @@
 
                 <h3 class="menu-title">Transaksi</h3><!-- /.menu-title -->
                 <li>
-                    <a href="widgets.html"> <i class="menu-icon ti-money"></i>Kasir </a>
+                    <a href="{{route('kasir')}}"> <i class="menu-icon ti-money"></i>Kasir </a>
                 </li>
                 @if (Auth::user()->role == 3)
                 @else
