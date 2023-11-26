@@ -27,7 +27,7 @@
                 </li>
 
                 <h3 class="menu-title">Transaksi</h3><!-- /.menu-title -->
-                <li>
+                <li class="{{ request()->is('kasir*') ? 'active' : '' }}">
                     <a href="{{route('kasir')}}"> <i class="menu-icon ti-money"></i>Kasir </a>
                 </li>
                 @if (Auth::user()->role == 3)
