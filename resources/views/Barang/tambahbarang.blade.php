@@ -41,10 +41,21 @@
             <div class="card-body card-block">
                 <form action="{{route('barang.store')}}" method="post" class="form-horizontal">
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-nama" class=" form-control-label">Kode Barang</label>
+                        <div class="col col-md-3"><label for="select" class=" form-control-label">Departemen</label>
                         </div>
-                        <div class="col-12 col-md-9"><input type="text" id="hf-kode" name="kode"
-                                placeholder="Masukan Kode Barang" class="form-control" value="{{ old('kode') }}">
+                        <div class="col-12 col-md-9">
+                            <select name="kategori" id="kategori" class="form-control">
+                                <option value="">Silahkan Pilih Departemen</option>
+                                <option value="CAFEPASTRY">CAFEPASTRY</option>
+                                <option value="BAR RESTO">BAR RESTO</option>
+                                <option value="PRODUK">PRODUK</option>
+                                <option value="MINERAL WATER">MINERAL WATER</option>
+                                <option value="AMENITIS HK">AMENITIS HK</option>
+                                <option value="AMNETIS MEETING">AMENITIS MEETING</option>
+                                <option value="HK DAN CHEMICAL">HK DAN CHEMICAL</option>
+                                <option value="DUS">DUS</option>
+                                <option value="ME">ME</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -55,25 +66,32 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-jenis" class=" form-control-label">Jenis Barang</label>
+                        <div class="col col-md-3"><label for="hf-jenis" class=" form-control-label">Stok Barang</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="hf-jenis_barang" name="jenis_barang"
-                                placeholder="Masukan Jenis Barang" class="form-control" value="{{old('jenis_barang')}}">
+                            <input type="text" id="hf-jenis_barang" name="stok_barang" placeholder="Masukan Stok Barang"
+                                class="form-control" value="{{old('stok_barang')}}">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-harga" class=" form-control-label">Harga</label>
+                        <div class="col col-md-3"><label for="hf-harga" class=" form-control-label">Barang Masuk</label>
                         </div>
-                        <div class="col-12 col-md-9"><input type="text" id="hf-harga" name="harga"
-                                placeholder="Masukan Harga" class="form-control" value="{{old('harga')}}">
+                        <div class="col-12 col-md-9"><input type="text" id="hf-harga" name="masuk"
+                                placeholder="Masukan Barang Masuk" class="form-control" value="{{old('masuk')}}">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-stok" class=" form-control-label">Stok</label>
+                        <div class="col col-md-3"><label for="hf-stok" class=" form-control-label">Barang Keluar</label>
                         </div>
-                        <div class="col-12 col-md-9"><input type="text" id="hf-stok" name="stok"
-                                placeholder="Masukan Banyaknya Stok" class="form-control" value="{{old('stok')}}">
+                        <div class="col-12 col-md-9"><input type="text" id="hf-stok" name="keluar"
+                                placeholder="Masukan Barang Keluar" class="form-control" value="{{old('keluar')}}">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="hf-stok" class=" form-control-label">Sisa</label>
+                        </div>
+                        <div class="col-12 col-md-9"><input type="text" id="hf-stok" name="sisa" placeholder=""
+                                class="form-control" value="{{old('sisa')}}" disabled="">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -95,14 +113,6 @@
                                 <option value="botol">Botol</option>
                                 <option value="kotak">Kotak</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-harga_jual" class="form-control-label">Harga
-                                Jual</label>
-                        </div>
-                        <div class="col-12 col-md-9"><input type="text" id="hf-harga_jual" name="harga_jual"
-                                placeholder="Masukan Harga Jual" class="form-control" value="{{old('harga_jual')}}">
                         </div>
                     </div>
                     <!-- <div class="row form-group">

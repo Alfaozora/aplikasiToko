@@ -13,46 +13,61 @@
                 </div>
                 <div class="modal-body">
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-nama" class=" form-control-label">Kode Barang</label>
-                        </div>
-                        <div class="col-12 col-md-9"><input type="text" id="hf-kode" name="kode"
-                                placeholder="Masukan Kode Barang" class="form-control"
-                                value="{{ old('kode', $b->kode) }}">
+                        <div class="col col-md-3"><label for="select" class=" form-control-label">Satuan</label></div>
+                        <div class="col-12 col-md-9">
+                            <select name="kategori" id="kategori" class="form-control"
+                                value="{{old('kategori', $b->kategori)}}">
+                                <option value="">Silahkan Pilih Departemen</option>
+                                <option value="CAFEPASTRY">CAFEPASTRY</option>
+                                <option value="BAR RESTO">BAR RESTO</option>
+                                <option value="PRODUK">PRODUK</option>
+                                <option value="MINERAL WATER">MINERAL WATER</option>
+                                <option value="AMENITIS HK">AMENITIS HK</option>
+                                <option value="AMNETIS MEETING">AMENITIS MEETING</option>
+                                <option value="HK DAN CHEMICAL">HK DAN CHEMICAL</option>
+                                <option value="DUS">DUS</option>
+                                <option value="ME">ME</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-nama_barang" class=" form-control-label">Nama
-                                Barang</label></div>
+                        <div class="col col-md-3"><label for="hf-nama" class=" form-control-label">Nama Barang</label>
+                        </div>
                         <div class="col-12 col-md-9"><input type="text" id="hf-nama_barang" name="nama_barang"
                                 placeholder="Masukan Nama Barang" class="form-control"
                                 value="{{ old('nama_barang', $b->nama_barang) }}">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-jenis" class=" form-control-label">Jenis Barang</label>
+                        <div class="col col-md-3"><label for="hf-stok_barang" class=" form-control-label">Stok
+                                Barang</label></div>
+                        <div class="col-12 col-md-9"><input type="text" id="hf-stok_barang" name="stok_barang"
+                                placeholder="Masukan Stok Barang" class="form-control"
+                                value="{{ old('stok_barang', $b->stok_barang) }}">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3"><label for="hf-jenis" class=" form-control-label">Barang Masuk</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="hf-jenis_barang" name="jenis_barang"
-                                placeholder="Masukan Jenis Barang" class="form-control"
-                                value="{{old('jenis_barang', $b->jenis_barang)}}">
+                            <input type="text" id="hf-masuk" name="masuk" placeholder="Masukan Barang Masuk"
+                                class="form-control" value="{{old('masuk', $b->masuk)}}">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-harga" class=" form-control-label">Harga</label>
+                        <div class="col col-md-3"><label for="hf-keluar" class=" form-control-label">Barang
+                                Keluar</label>
                         </div>
-                        <div class="col-12 col-md-9"><input type="text" id="hf-harga" name="harga"
-                                placeholder="Masukan Harga" class="form-control" value="{{old('harga', $b->harga)}}">
+                        <div class="col-12 col-md-9"><input type="text" id="hf-keluar" name="keluar"
+                                placeholder="Masukan Barang Keluar" class="form-control"
+                                value="{{old('keluar', $b->keluar)}}">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-stok" class=" form-control-label">Stok</label>
+                        <div class="col col-md-3"><label for="hf-sisa" class=" form-control-label">Sisa</label>
                         </div>
-                        <div class="col-12 col-md-9"><input type="text" id="hf-stok" name="stok"
-                                placeholder="Masukan Banyaknya Stok" class="form-control"
-                                value="{{old('stok', $b->stok)}}">
-                            @if($errors->has('stok'))
-                            <li>{{ $errors}}</li>
-                            @endif
+                        <div class="col-12 col-md-9"><input type="text" id="hf-sisa" name="sisa" placeholder=""
+                                class="form-control" value="{{old('sisa', $b->sisa)}}" disabled="">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -75,22 +90,6 @@
                                 <option value="botol">Botol</option>
                                 <option value="kotak">Kotak</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-harga_jual" class="form-control-label">Harga
-                                Jual</label>
-                        </div>
-                        <div class="col-12 col-md-9"><input type="text" id="hf-harga_jual" name="harga_jual"
-                                placeholder="Masukan Harga Jual" class="form-control"
-                                value="{{old('harga_jual', $b->harga_jual)}}">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-profit" class=" form-control-label">Profit</label>
-                        </div>
-                        <div class="col-12 col-md-9"><input type="text" id="hf-profit" name="profit"
-                                class="form-control" disabled="">
                         </div>
                     </div>
                 </div>

@@ -19,7 +19,7 @@
         </div>
     </div>
 </div>
-<div class="col-lg-12" style="margin-top: 15px;">
+<div class="col-lg-12" style="margin-top: 15px;" id="searchResults">
     @if ($message = Session::get('success'))
     <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
         <span class="badge badge-pill badge-success">Success</span>
@@ -52,13 +52,20 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <form action="" method="GET">
+                    <form id="searchForm" class="form-horizontal">
                         <div class="card-body input-group form-group" style="padding-left: 0px;">
-                            <button type="submit" class="btn btn-primary" type="button">
-                                <i class="fa fa-search"></i> Search
-                            </button>
-                            <input type="text" id="input1-group2" name="cari" placeholder="Kode, Nama, dan Jenis Barang"
-                                class="form-control">
+                            <select name="kategori" id="kategori" class="form-control" onchange="kategori()">
+                                <option value="">Silahkan Pilih Departemen</option>
+                                <option value="CAFEPASTRY">CAFEPASTRY</option>
+                                <option value="BAR RESTO">BAR RESTO</option>
+                                <option value="PRODUK">PRODUK</option>
+                                <option value="MINERAL WATER">MINERAL WATER</option>
+                                <option value="AMENITIS HK">AMENITIS HK</option>
+                                <option value="AMNETIS MEETING">AMENITIS MEETING</option>
+                                <option value="HK DAN CHEMICAL">HK DAN CHEMICAL</option>
+                                <option value="DUS">DUS</option>
+                                <option value="ME">ME</option>
+                            </select>
                         </div>
                     </form>
                 </div>
@@ -67,14 +74,13 @@
                 <thead class="text-center">
                     <tr>
                         <th rowspan="2" style="vertical-align: middle;">No</th>
-                        <th rowspan="2" style="vertical-align: middle;">Kode</th>
+                        <th rowspan="2" style="vertical-align: middle;">Departemen</th>
                         <th rowspan="2" style="vertical-align: middle;">Nama Barang</th>
-                        <th rowspan="2" style="vertical-align: middle;">Jenis Barang</th>
-                        <th rowspan="2" style="vertical-align: middle;">Harga Beli</th>
-                        <th rowspan="2" style="vertical-align: middle;">Stok</th>
+                        <th rowspan="2" style="vertical-align: middle;">Stok Barang</th>
+                        <th rowspan="2" style="vertical-align: middle;">Barang Masuk</th>
+                        <th rowspan="2" style="vertical-align: middle;">Barang Keluar</th>
+                        <th rowspan="2" style="vertical-align: middle;">Sisa Barang</th>
                         <th rowspan="2" style="vertical-align: middle;">Satuan</th>
-                        <th rowspan="2" style="vertical-align: middle;">Harga Jual</th>
-                        <th rowspan="2" style="vertical-align: middle;">Profit</th>
                         <th colspan="2">Aksi</th>
                     </tr>
                     <tr>
@@ -87,15 +93,13 @@
                     <tr class="text-center">
                         <input type="hidden" class="delete_id" value="{{$b->id}}">
                         <td style="vertical-align: middle;">{{ $loop->iteration }}</td>
-                        <td style="vertical-align: middle;">{!! DNS1D::getBarcodeHTML("$b->kode",'EAN13', 2,33)
-                            !!}{{$b->kode}}</td>
+                        <td style="vertical-align: middle;">{{ $b->kategori}}</td>
                         <td style="vertical-align: middle;">{{ $b->nama_barang }}</td>
-                        <td style="vertical-align: middle;">{{ $b->jenis_barang }}</td>
-                        <td style="vertical-align: middle;">{{ number_format ($b->harga, 0, ',', '.') }}</td>
-                        <td style="vertical-align: middle;">{{ $b->stok }}</td>
-                        <td style="vertical-align: middle;">{{ $b->satuan }}</td>
-                        <td style="vertical-align: middle;">{{ number_format($b->harga_jual, 0, ',', '.') }}</td>
-                        <td style="vertical-align: middle;">{{ number_format($b->profit, 0, ',', '.') }}</td>
+                        <td style="vertical-align: middle;">{{ $b->stok_barang }}</td>
+                        <td style="vertical-align: middle;">{{ $b->masuk }}</td>
+                        <td style="vertical-align: middle;">{{ $b->keluar }}</td>
+                        <td style="vertical-align: middle;">{{ $b->sisa }}</td>
+                        <td style="vertical-align: middle;">{{ $b->satuan}}</td>
                         <td class="text-center" style="vertical-align: middle;">
                             <a type="button" class="btn btn-warning btn-sm" data-toggle="modal" href="#"
                                 data-target="#largeModal{{$b->id}}"><i class="fa fa-edit"></i></a>
@@ -110,20 +114,9 @@
                         @include('barang.editbarang')
                     </tr>
                     @endforeach
-                    <tr>
-                        <th class="text-center">Total</th>
-                        <th colspan="3"></th>
-                        <th class="text-center">{{ number_format($totalHarga, 0, ',', '.')}}</th>
-                        <th class="text-center">{{$totalStok}}</th>
-                        <th style="background-color: lightgray;"></th>
-                        <th class="text-center">{{ number_format($totalHargaJual, 0, ',', '.')}}</th>
-                        <th class="text-center">{{ number_format($totalProfit, 0, ',', '.')}}</th>
-                        <th colspan="2" style="background-color: lightgray;"></th>
-                    </tr>
                 </tbody>
             </table>
         </div>
-        {{ $barangs->links() }}
     </div>
 </div>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -173,6 +166,28 @@ $(document).ready(function() {
             });
     });
 
+});
+</script>
+<script>
+$(document).ready(function() {
+    $('#kategori').change(function(e) {
+        e.preventDefault();
+        var kategori = $('#kategori').val();
+        $.ajax({
+            type: "GET",
+            url: "{{route('barang.databarang')}}",
+            data: {
+                kategori: kategori
+            },
+            success: function(response) {
+                $('#searchResults').html(response);
+                $('#searchResults').show();
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
 });
 </script>
 @endsection
