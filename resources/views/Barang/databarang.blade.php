@@ -19,7 +19,7 @@
         </div>
     </div>
 </div>
-<div class="col-lg-12" style="margin-top: 15px;" id="searchResults">
+<div class="col-lg-12" style="margin-top: 15px;">
     @if ($message = Session::get('success'))
     <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
         <span class="badge badge-pill badge-success">Success</span>
@@ -52,22 +52,20 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <form id="searchForm" class="form-horizontal">
-                        <div class="card-body input-group form-group" style="padding-left: 0px;">
-                            <select name="kategori" id="kategori" class="form-control" onchange="kategori()">
-                                <option value="">Silahkan Pilih Departemen</option>
-                                <option value="CAFEPASTRY">CAFEPASTRY</option>
-                                <option value="BAR RESTO">BAR RESTO</option>
-                                <option value="PRODUK">PRODUK</option>
-                                <option value="MINERAL WATER">MINERAL WATER</option>
-                                <option value="AMENITIS HK">AMENITIS HK</option>
-                                <option value="AMNETIS MEETING">AMENITIS MEETING</option>
-                                <option value="HK DAN CHEMICAL">HK DAN CHEMICAL</option>
-                                <option value="DUS">DUS</option>
-                                <option value="ME">ME</option>
-                            </select>
-                        </div>
-                    </form>
+                    <div class="card-body input-group form-group" style="padding-left: 0px;">
+                        <select id="kategoriDropdown" class="form-control">
+                            <option value="" selected>Silahkan Pilih Departemen</option>
+                            <option value="CAFEPASTRY">CAFEPASTRY</option>
+                            <option value="BAR RESTO">BAR RESTO</option>
+                            <option value="PRODUK">PRODUK</option>
+                            <option value="MINERAL WATER">MINERAL WATER</option>
+                            <option value="AMENITIS HK">AMENITIS HK</option>
+                            <option value="AMNETIS MEETING">AMENITIS MEETING</option>
+                            <option value="HK DAN CHEMICAL">HK DAN CHEMICAL</option>
+                            <option value="DUS">DUS</option>
+                            <option value="ME">ME</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <table class="table table-bordered">
@@ -88,7 +86,7 @@
                         <th>Hapus</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="resultTable">
                     @foreach ($barangs as $b)
                     <tr class="text-center">
                         <input type="hidden" class="delete_id" value="{{$b->id}}">
@@ -119,6 +117,7 @@
         </div>
     </div>
 </div>
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 <script>
@@ -168,20 +167,23 @@ $(document).ready(function() {
 
 });
 </script>
+<!-- script ajax untuk melakukan pemfilteran berdasarkan kategori -->
 <script>
 $(document).ready(function() {
-    $('#kategori').change(function(e) {
+    $('#kategoriDropdown').change(function(e) {
         e.preventDefault();
-        var kategori = $('#kategori').val();
+
+        var kategori = $('#kategoriDropdown').val();
+
         $.ajax({
             type: "GET",
-            url: "{{route('barang.databarang')}}",
+            url: "{{ route('barang.cari') }}",
             data: {
                 kategori: kategori
             },
             success: function(response) {
-                $('#searchResults').html(response);
-                $('#searchResults').show();
+                $('#resultTable').html(response);
+                $('#resultTable').show();
             },
             error: function(xhr, status, error) {
                 console.log(xhr.responseText);

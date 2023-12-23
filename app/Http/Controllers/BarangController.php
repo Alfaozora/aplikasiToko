@@ -19,20 +19,12 @@ class BarangController extends Controller
         return view('barang.databarang', compact('barangs'));
     }
 
-    public function search(Request $request)
+    public function cari(Request $request)
     {
         $kategori = $request->input('kategori');
 
-        if ($kategori) {
-            $barangs = Barang::where('kategori', $kategori)->get();
-
-            return view('barang.search_results', compact('barangs'));
-        } else {
-            // Handle if category is empty (e.g., show all items)
-            $barangs = Barang::all();
-
-            return view('barang.search_results', compact('barangs'));
-        }
+        $barangs = Barang::where('kategori', $kategori)->get();
+        return view('barang.databarang', compact('barangs'));
     }
 
 
