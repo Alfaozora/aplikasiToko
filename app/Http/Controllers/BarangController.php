@@ -62,7 +62,6 @@ class BarangController extends Controller
         $stok_barang = $request->input('stok_barang');
         $masuk = $request->input('masuk');
         $keluar = $request->input('keluar');
-        $sisa = $request->input('sisa');
         $satuan = $request->input('satuan');
 
         $barangs = Barang::create([

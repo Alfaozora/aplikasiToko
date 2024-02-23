@@ -132,7 +132,7 @@
                         <div class="col col-md-3"><label for="select" class=" form-control-label">Departemen</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <select name="kategori" id="kategori" class="form-control">
+                            <select id="departemen" class="form-control">
                                 @foreach($departemens as $d)
                                 <option value="{{$d->kategori}}">{{$d->kategori}}</option>
                                 @endforeach
@@ -142,47 +142,47 @@
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="hf-nama_barang" class=" form-control-label">Nama
                                 Barang</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="nama_barang" name="nama_barang"
+                        <div class="col-12 col-md-9"><input type="text" id="nama_barang"
                                 placeholder="Masukan Nama Barang" class="form-control" value="{{ old('nama_barang') }}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="hf-jenis" class=" form-control-label">Stok
-                                Barang</label>
+                                Awal</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="stok_barang" name="stok_barang" placeholder="Masukan Stok Barang"
-                                class="form-control" value="{{old('stok_barang')}}">
+                            <input type="text" id="stok_barang" placeholder="Masukan Stok Barang" class="form-control"
+                                value="{{old('stok_barang')}}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="hf-harga" class=" form-control-label">Barang
                                 Masuk</label>
                         </div>
-                        <div class="col-12 col-md-9"><input type="text" id="masuk" name="masuk"
-                                placeholder="Masukan Barang Masuk" class="form-control" value="{{old('masuk')}}">
+                        <div class="col-12 col-md-9"><input type="text" id="masuk" placeholder="Masukan Barang Masuk"
+                                class="form-control" value="{{old('masuk')}}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="hf-stok" class=" form-control-label">Barang
                                 Keluar</label>
                         </div>
-                        <div class="col-12 col-md-9"><input type="text" id="keluar" name="keluar"
-                                placeholder="Masukan Barang Keluar" class="form-control" value="{{old('keluar')}}">
+                        <div class="col-12 col-md-9"><input type="text" id="keluar" placeholder="Masukan Barang Keluar"
+                                class="form-control" value="{{old('keluar')}}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="hf-stok" class=" form-control-label">Sisa</label>
                         </div>
-                        <div class="col-12 col-md-9"><input type="text" id="sisa" name="sisa" placeholder=""
-                                class="form-control" value="{{old('sisa')}}" disabled="">
+                        <div class="col-12 col-md-9"><input type="text" id="sisa" placeholder="" class="form-control"
+                                value="{{old('sisa')}}" disabled="">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="select" class=" form-control-label">Satuan</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <select name="satuan" id="satuan" class="form-control">
+                            <select id="satuan_1" class="form-control">
                                 <option value="">Silahkan Pilih</option>
                                 <option value="pcs">Pcs</option>
                                 <option value="box">Box</option>
@@ -206,7 +206,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-tambah btn-primary btn-sm">
+                        <button class="btn btn-tambah btn-primary btn-sm">
                             <i class="fa fa-dot-circle-o"></i> Submit
                         </button>
                         <button type="reset" class="btn btn-danger btn-sm">
@@ -223,6 +223,15 @@
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $(".modal-body input[type='text']").on('input', function() {
+        $(this).val($(this).val().toUpperCase());
+    });
+});
+</script>
+
 <script>
 $(document).ready(function() {
 
@@ -301,12 +310,12 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     $(".btn-tambah").click(function() {
-        var kategori = $("#kategori").val();
+        var kategori = $("#departemen").val();
         var nama_barang = $("#nama_barang").val();
         var stok_barang = $("#stok_barang").val();
         var masuk = $("#masuk").val();
         var keluar = $("#keluar").val();
-        var satuan = $("#satuan").val();
+        var satuan = $("#satuan_1").val();
         var token = $("meta[name='csrf-token']").attr("content");
 
         if (kategori.length == "") {
@@ -364,16 +373,30 @@ $(document).ready(function() {
                     if (response.success) {
                         Swal.fire({
                             type: 'success',
-                            title: 'Register Berhasil!',
+                            title: 'Tambah Barang Berhasil!',
                             text: 'Selamat Data Berhasil Ditambahkan'
                         });
 
-                        $("#kategori").val('');
+                        let barangs = `
+                            <tr id="index_${response.data.id}">
+                                <td>${response.data.kategori}</td>
+                                <td>${response.data.nama_barang}</td>
+                                <td>${response.data.stok_barang}</td>
+                                <td>${response.data.masuk}</td>
+                                <td>${response.data.keluar}</td>
+                                <td>${response.data.satuan}</td>
+                            </tr>
+                        `;
+
+                        $("#departemen").val('');
                         $("#nama_barang").val('');
                         $("#stok_barang").val('');
                         $("#masuk").val('');
                         $("#keluar").val('');
-                        $("#satuan").val('');
+                        $("#satuan_1").val('');
+
+                        //close modal
+                        $('#modalBarang').modal('hide');
                     } else {
                         Swal.fire({
                             type: 'error',
@@ -395,4 +418,5 @@ $(document).ready(function() {
     });
 });
 </script>
+
 @endsection
