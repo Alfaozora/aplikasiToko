@@ -33,6 +33,7 @@ Route::resource('register', RegisterController::class)->middleware(['auth', 'adm
 
 #Barang
 Route::resource('barang', BarangController::class)->middleware(['auth']);
+Route::get('/barang/cari', [BarangController::class, 'cari'])->middleware(['auth'])->name('barang.cari');
 
 #Supplier
 Route::resource('supplier', SupplierController::class)->middleware(['auth']);

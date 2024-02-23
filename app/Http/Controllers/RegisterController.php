@@ -43,37 +43,28 @@ class RegisterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        Session::flash('name', $request->name);
-        Session::flash('email', $request->email);
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|max:35',
-            'password_confirmation' => 'required|same:password',
-            'role' => 'required'
-        ], [
-            'name.required' => 'Nama tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
-            'email.email' => 'Email tidak valid',
-            'email.unique' => 'Email sudah terdaftar',
-            'password.required' => 'Password tidak boleh kosong',
-            'password.min' => 'Password minimal 8 karakter',
-            'password.max' => 'Password maksimal 35 karakter',
-            'password_confirmation.required' => 'Konfirmasi password tidak boleh kosong',
-            'password_confirmation.same' => 'Konfirmasi password tidak sama',
-            'role.required' => 'Role tidak boleh kosong'
-        ]);
+    {   
+        $role = $request->input('role');
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $password = $request->input('password');
+        
         $user = User::create([
-            'role' => $request->role,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'role' => $role,
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make($password)
         ]);
-        if ($user) {
-            return redirect()->route('register.index')->with(['success' => 'Data Berhasil Ditambahkan']);
+        if($user) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Register Berhasil!'
+            ], 201);
         } else {
-            return redirect()->route('register.index')->with(['erorr' => 'Data Gagal Ditambahkan']);
+            return response()->json([
+                'success' => false,
+                'message' => 'Register Gagal!'
+            ], 400);
         }
     }
 
