@@ -102,8 +102,11 @@
                                 data-target="#largeModal{{$b->id}}"><i class="fa fa-edit"></i></a>
                         </td>
                         <td class="text-center" style="vertical-align: middle;">
-                            <button href="javascript:void(0)" id="btn-delete-post" data-id="{{ $post->id }}"
-                                class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                            <form action="{{route('barang.destroy', $b->id)}}" method="POST" class="d-inline">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger btn-sm btndelete"><i class="fa fa-trash"></i></button>
+                            </form>
                         </td>
                         @include('barang.editbarang')
                     </tr>
@@ -217,10 +220,7 @@
     <!-- End Modal Tambah Data Barang -->
 </div>
 </div>
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-
 <script>
 $(document).ready(function() {
     $(".modal-body input[type='text']").on('input', function() {
@@ -228,7 +228,7 @@ $(document).ready(function() {
     });
 });
 </script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 $(document).ready(function() {
 
@@ -316,38 +316,38 @@ $(document).ready(function() {
         var token = $("meta[name='csrf-token']").attr("content");
 
         if (kategori.length == "") {
-            Swal.fire({
-                type: 'warning',
+            swal({
+                icon: 'warning',
                 title: 'Oops',
                 text: 'Kategori Harus Diisi !'
             });
         } else if (nama_barang.length == "") {
-            Swal.fire({
-                type: 'warning',
+            swal({
+                icon: 'warning',
                 title: 'Oops...',
                 text: 'Nama Barang Harus Diisi !'
             });
         } else if (stok_barang.length == "") {
-            Swal.fire({
-                type: 'warning',
+            swal({
+                icon: 'warning',
                 title: 'Oops...',
                 text: 'Stok Barang Harus Diisi !'
             });
         } else if (masuk.length == "") {
-            Swal.fire({
-                type: 'warning',
+            swal({
+                icon: 'warning',
                 title: 'Oops...',
                 text: 'Barang Masuk Harus Diisi !'
             });
         } else if (keluar.length == "") {
-            Swal.fire({
-                type: 'warning',
+            swal({
+                icon: 'warning',
                 title: 'Oops...',
                 text: 'Barang Keluar Harus Diisi !'
             });
         } else if (satuan.length == "") {
-            Swal.fire({
-                type: 'warning',
+            swal({
+                icon: 'warning',
                 title: 'Oops...',
                 text: 'Satuan Harus Diisi !'
             });
@@ -368,22 +368,11 @@ $(document).ready(function() {
 
                 success: function(response) {
                     if (response.success) {
-                        Swal.fire({
-                            type: 'success',
+                        swal({
+                            icon: 'success',
                             title: 'Tambah Barang Berhasil!',
                             text: 'Selamat Data Berhasil Ditambahkan'
                         });
-
-                        let barangs = `
-                            <tr id="index_${response.data.id}">
-                                <td>${response.data.kategori}</td>
-                                <td>${response.data.nama_barang}</td>
-                                <td>${response.data.stok_barang}</td>
-                                <td>${response.data.masuk}</td>
-                                <td>${response.data.keluar}</td>
-                                <td>${response.data.satuan}</td>
-                            </tr>
-                        `;
 
                         $("#departemen").val('');
                         $("#nama_barang").val('');
@@ -395,8 +384,8 @@ $(document).ready(function() {
                         //close modal
                         $('#modalBarang').modal('hide');
                     } else {
-                        Swal.fire({
-                            type: 'error',
+                        swal({
+                            icon: 'error',
                             title: 'Tambah Barang Gagal',
                             text: 'Silahkan Coba Lagi!'
                         });
@@ -404,8 +393,8 @@ $(document).ready(function() {
                     console.log(response);
                 },
                 error: function(response) {
-                    Swal.fire({
-                        type: 'error',
+                    swal({
+                        icon: 'error',
                         title: 'Oops!',
                         text: 'Server Error!'
                     });

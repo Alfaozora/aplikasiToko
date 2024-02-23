@@ -155,10 +155,8 @@ class BarangController extends Controller
      */
     public function destroy($id)
     {
-        $barangs::where('id', $id)->delete();
-        return response()->json([
-            'success' => true,
-            'message' => 'Data Berhasil Dihapus',
-        ]);
+        $barangs = barang::find($id);
+        $barangs->delete();
+        return response()->json(['status' => 'Data Berhasil di hapus!']);
     }
 }
