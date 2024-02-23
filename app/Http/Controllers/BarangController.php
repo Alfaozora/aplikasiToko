@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Barang;
+use App\Models\departemen;
 
 
 class BarangController extends Controller
@@ -16,7 +17,11 @@ class BarangController extends Controller
     public function index(Request $request)
     {
         $barangs = barang::all();
-        return view('barang.databarang', compact('barangs'));
+        $departemens = departemen::all();
+        return view('barang.databarang', compact(
+            'barangs',
+            'departemens'
+        ));
     }
 
     public function cari(Request $request)
@@ -35,7 +40,7 @@ class BarangController extends Controller
      */
     public function create()
     {
-        return view('barang.tambahbarang');
+        
     }
 
     /**
@@ -52,34 +57,33 @@ class BarangController extends Controller
         $keluar = $request->input('keluar');
         $sisa = $stok_barang + $masuk - $keluar;
         
-        $this->validate($request, [
-            'kategori' => 'required',
-            'nama_barang' => 'required',
-            'stok_barang' => 'required',
-            'masuk' => 'required',
-            'keluar' => 'required',
-            'satuan' => 'required',
-        ], [
-            'kategori.required' => 'Kategori tidak boleh kosong',
-            'nama_barang.required' => 'Nama Barang tidak boleh kosong',
-            'stok_barang.required' => 'Stok Barang tidak boleh kosong',
-            'masuk.required' => 'Barang masuk Barang tidak boleh kosong',
-            'keluar.required' => 'Barang keluar tidak boleh kosong',
-            'satuan.required' => 'Satuan tidak boleh kosong',
-        ]);
+        $kategori = $request->input('kategori');
+        $nama_barang = $request->input('nama_barang');
+        $stok_barang = $request->input('stok_barang');
+        $masuk = $request->input('masuk');
+        $keluar = $request->input('keluar');
+        $sisa = $request->input('sisa');
+        $satuan = $request->input('satuan');
+
         $barangs = Barang::create([
-            'kategori' => $request->kategori,
-            'nama_barang' => $request->nama_barang,
-            'stok_barang' => $request->stok_barang,
-            'masuk' => $request->masuk,
-            'keluar' => $request->keluar,
+            'kategori' => $kategori,
+            'nama_barang' => $nama_barang,
+            'stok_barang' => $stok_barang,
+            'masuk' => $masuk,
+            'keluar' => $keluar,
             'sisa' => $sisa,
-            'satuan' => $request->satuan,
+            'satuan' => $satuan,
         ]);
-        if ($barangs) {
-            return redirect()->route('barang.index')->with(['success' => 'Data Barang Berhasil Ditambahkan']);
+        if($barangs) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Tambah Data Berhasil!'
+            ], 201);
         } else {
-            return redirect()->route('barang.index')->with(['erorr' => 'Data Barang Gagal Ditambahkan']);
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal Menambahkan Data!'
+            ], 400);
         }
     }
 

@@ -17,4 +17,9 @@ class barang extends Model
         'sisa',
         'satuan',
     ];
+
+    public function departemen()
+    {
+        return $this->hasMany(departemen::class);
+    }
 }
