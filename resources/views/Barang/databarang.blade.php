@@ -102,11 +102,8 @@
                                 data-target="#largeModal{{$b->id}}"><i class="fa fa-edit"></i></a>
                         </td>
                         <td class="text-center" style="vertical-align: middle;">
-                            <form action="{{route('barang.destroy', $b->id)}}" method="POST" class="d-inline">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-danger btn-sm btndelete"><i class="fa fa-trash"></i></button>
-                            </form>
+                            <button href="javascript:void(0)" id="btn-delete-post" data-id="{{ $post->id }}"
+                                class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                         </td>
                         @include('barang.editbarang')
                     </tr>
