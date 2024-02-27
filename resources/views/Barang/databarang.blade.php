@@ -51,16 +51,6 @@
                             Tambah Barang</a>
                     </div>
                 </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-body input-group form-group" style="padding-left: 0px;">
-                        <select id="kategoriDropdown" class="form-control">
-                            <option value="" selected>Silahkan Pilih Departemen</option>
-                            @foreach($departemens as $d)
-                            <option value="{{$d->kategori}}">{{$d->kategori}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
             </div>
             <table class="table table-bordered">
                 <thead class="text-center">
@@ -274,32 +264,6 @@ $(document).ready(function() {
             });
     });
 
-});
-</script>
-
-<!-- script ajax untuk melakukan pemfilteran berdasarkan kategori -->
-<script>
-$(document).ready(function() {
-    $('#kategoriDropdown').change(function(e) {
-        e.preventDefault();
-
-        var kategori = $('#kategoriDropdown').val();
-
-        $.ajax({
-            type: "GET",
-            url: "{{ route('barang.cari') }}",
-            data: {
-                kategori: kategori
-            },
-            success: function(response) {
-                $('#resultTable').html(response);
-                $('#resultTable').show();
-            },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
-            }
-        });
-    });
 });
 </script>
 
